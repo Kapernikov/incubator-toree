@@ -85,13 +85,13 @@ class AddDeps extends LineMagic with IncludeInterpreter
     val credentials = getAll(_credentials).getOrElse(Nil)
     val excludes = getAll(_exclude).getOrElse(Nil)
 
-    val excludesSet = excludes.map((x => {
-        if (x.contains(":")) {
-          return (x.split(":")(0), x.split(":")(1))
-        } else {
-          return (x, "*")
-        }
-    }) : (String => (String, String))).toSet
+    val excludesSet = excludes.map((x: String) => {
+      if (x.contains(":")) {
+        (x.split(":")(0), x.split(":")(1))
+      } else {
+        (x, "*")
+      }
+    }: (String, String)).toSet
 
     val repositoriesWithCreds = dependencyDownloader.resolveRepositoriesAndCredentials(repository, credentials)
 
